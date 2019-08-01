@@ -10,6 +10,8 @@ Vue.use(BootstrapVue)
 
 import './assets/css/styles.scss'
 
+import _ from 'lodash'; 
+
 new Vue({
   render: h => h(App)
 }).$mount('#app')
