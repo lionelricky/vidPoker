@@ -12,7 +12,22 @@
     font-weight: 800;
   }
 
+  .money{
+    font-size: 16px;
+    font-weight: 800;
+    padding-bottom: 10px;
+  }
+  .winlose{
+    font-size: 16px;
+    font-weight: 500;
+    padding-top: 10px;
+  }
+  img{
+    max-width: 125px;
+    width: 100%;
+  }
 }
+
 
 .cardBut{
   cursor: pointer;
@@ -30,13 +45,12 @@ table.minimalistBlack td, table.minimalistBlack th {
   padding: 5px 4px;
 }
 table.minimalistBlack td {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 15px;
   color: black;
 }
 table.minimalistBlack th {
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 900;
   background-color: lightgrey;
   color: black;
   text-align: left;

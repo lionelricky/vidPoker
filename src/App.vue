@@ -3,8 +3,9 @@
     <div class="container">
         <div class="row">
 
-          <div class="col-sm header" style="padding-bottom: 40px;">
+          <div class="col-sm header" style="padding-bottom: 10px;">
             VUE JS VIDEO POKER
+            <hr size="1">
           </div>
 
         </div>
@@ -13,7 +14,7 @@
       <div class="row">
 
         <div class="col-sm" style="max-width: 300px;">
-          <div>Money: {{this.money}}</div>
+          <div class="money">Money: {{this.money}} $</div>
             <table class="minimalistBlack">
             <tr><th colspan="2">PAYOUT GRID:</th></tr>
             <tr><td>Royal Flush:</td><td>500:1</td></tr>
@@ -26,17 +27,16 @@
             <tr><td>2 Pair:</td><td>2:1</td></tr>
             <tr><td>Pair (Jacks or Better):</td><td>1:1</td></tr>
           </table>
-         <div v-if="win">Winner! {{this.winner.name}}.</div>
-         <div v-if="noWin">You lost. Try again.</div>
+         <div v-if="win" class="winlose" style="color:red;"><strong>Winner! {{this.winner.name}}</strong></div>
+         <div v-if="noWin" class="winlose">You lost. Try again.</div>
         </div>
 
         <div class="col-sm">
 
           <!--- cards -->
-            <div class="container">
+            <div class="container" style="margin-top: 30px;">
               <div class="row">
                 <div v-for="(card, index) in hand" :key="index" class="col-sm">
-                  <!-- <img v-bind:src="imgPath+card"> -->
                   <span @click="discard(index)" class="cardBut" :style="{'pointer-events':card.disabled?'none':'auto'}"><img v-bind:src="require('@/assets/images/'+card.name)"></span>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                         </div>
                   </div>
                   <div class="col-sm-12" style="padding-top: 40px;" v-else>
-                    Game over. You're out of money. 
+                   <strong> Game over. You're out of money.</strong> 
                   </div>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default {
       gameOn: false,
       betValue: 0,
       changeCards: false,
-      money: 50,
+      money: 100,
       win: false,
       noWin: false,
       winner: [{ name: null, value: 0 }],
@@ -106,6 +106,8 @@ export default {
       this.gameOn = false
       this.reset = false
       this.deck=[]
+      this.noWin = false
+      this.win = false
     },
     buildDeck () {
       let x = 1
@@ -127,8 +129,7 @@ export default {
       this.deal()
     },
     deal () {
-      this.noWin = false
-      this.win = false
+
 
       if(this.firstDeal == true){
         this.buildDeck()
@@ -161,7 +162,7 @@ export default {
     drawCard () {
       let suit = 0
       let face = 0
-      let index = _.random(0, this.deck.length)
+      let index = _.random(0, (this.deck.length-1)) 
       let selectedCard = this.deck[index]
       if (selectedCard > 400) {
         suit = 4
@@ -265,6 +266,8 @@ export default {
         twoPair = true
       } else if (faces[1] == faces[2] && faces[3] == faces[4]) {
         twoPair = true
+      }else if(faces[0] == faces[1] && faces[3] == faces[4]){
+        twoPair = true
       }
       // pair
       for (i = 0; i < 4; i++) {
@@ -316,19 +319,20 @@ export default {
           this.winner.name = null
           this.winner.value = 0
           this.noWin = true
+          this.win = false
         }
       }
 
-      console.log(faces)
-      console.log('2 pair   ' + twoPair)
-      console.log('3   ' + threeKind)
-      console.log('pair   ' + pair)
-      console.log('FH  ' + fullHouse)
-      console.log('FoAk  ' + fourOfaKind)
-      console.log('sf  ' + straitFlush)
-      console.log('rf  ' + royalFlush)
-      console.log('str  ' + strait)
-      console.log('fl   ' + flush)
+      // console.log(faces)
+      // console.log('2 pair   ' + twoPair)
+      // console.log('3   ' + threeKind)
+      // console.log('pair   ' + pair)
+      // console.log('FH  ' + fullHouse)
+      // console.log('FoAk  ' + fourOfaKind)
+      // console.log('sf  ' + straitFlush)
+      // console.log('rf  ' + royalFlush)
+      // console.log('str  ' + strait)
+      // console.log('fl   ' + flush)
     },
     discard (index) {
       if (this.hand[index].discarded == false) {
